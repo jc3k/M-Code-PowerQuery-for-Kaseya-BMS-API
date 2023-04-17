@@ -3,7 +3,7 @@ let
     access_token = Auth_Query,
 
     // Define the API endpoint and request headers
-    url = "https://api.bms.kaseya.com/v2/servicedesk/tickets",
+    url = "https://api.bms.kaseya.com/v2/servicedesk/tickets/",
     headers = [        #"Authorization" = "Bearer " & access_token,        #"Content-Type" = "application/json",        #"Accept" = "application/json"    ],
 
     // Send the request and retrieve the response
