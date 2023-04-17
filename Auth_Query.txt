@@ -4,9 +4,9 @@ let
 
     // Define the request body
     grantType = "password",
-    userName = "account-name-goes-here",
-    password = "password-goes-here",
-    tenant = "company-name-goes-here",
+    userName = "uuuuuuuuuuuuu",
+    password = "ppppppppppppp",
+    tenant = "superior managed it services llc",
     body = "grantType=" & grantType & "&userName=" & userName & "&password=" & password & "&tenant=" & tenant,
 
     // Define the request headers
