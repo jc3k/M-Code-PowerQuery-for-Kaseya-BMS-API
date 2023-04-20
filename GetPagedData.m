@@ -10,8 +10,9 @@ let
     data = Table.FromRecords(resultList),
     nextPage = if List.IsEmpty(resultList) or (maxPages <> null and pageNumber >= maxPages) then null else pageNumber + 1,
     nextData = if nextPage = null then null else @GetPagedData(url, queryParameters, access_token, nextPage, maxPages),
-    combinedData = if nextPage = null then data else Table.Combine({data, nextData})
+    combinedData = if nextPage = null then data else Table.Combine({data, nextData[Data]}),
+    loggedURLs = if nextPage = null then {url & "?" & Uri.BuildQueryString(updatedParameters)} else {url & "?" & Uri.BuildQueryString(updatedParameters)} & nextData[LoggedURLs]
 in
-    combinedData
+    [Data = combinedData, LoggedURLs = loggedURLs]
 in
     GetPagedData
