@@ -1,16 +1,25 @@
 let
-    access_token = #"Auth_Query",
-    url = "https://api.bms.kaseya.com/v2/servicedesk/tickets/",
+    BMS_Record_Count_Template = let
+    access_token = BMS_Auth_Query,
+    dateRange = DateRange(10, false), // Get the past 10 days without including today
+    baseUrl = "https://api.bms.kaseya.com/",
+    relativePath = "v2/servicedesk/tickets/",
     queryParameters = [
-        Filter.openDateFrom = "2023-02-01T16:20:01.241Z", 
-        Filter.openDateTo = "2023-02-10T16:20:01.241Z",
+        Filter.openDateFrom = dateRange[From], 
+        Filter.openDateTo = dateRange[To],
         pageSize = "97", // Set the pageSize to the same value as in your main query
         pageNumber = "0"
     ],
     headers = [#"Authorization" = "Bearer " & access_token, #"Content-Type" = "application/json", #"Accept" = "application/json"],
-    response = Web.Contents(url, [Headers=headers, Query=queryParameters]),
+    options = [Headers=headers, Query=queryParameters, RelativePath=relativePath],
+    response = Web.Contents(baseUrl, options),
     jsonResponse = Json.Document(response),
     totalRecords = jsonResponse[totalRecords], // Use the 'totalRecords' field
-    totalPages = Number.RoundUp(totalRecords / 97) // Calculate the total number of pages based on totalRecords and pageSize
+    totalPages = Number.RoundUp(totalRecords / 97), // Calculate the total number of pages based on totalRecords and pageSize
+
+    // Convert record to table
+    result = Record.ToTable([TotalRecords = totalRecords, TotalPages = totalPages])
 in
-    [TotalRecords = totalRecords, TotalPages = totalPages]
+    result
+in
+    BMS_Record_Count_Template
