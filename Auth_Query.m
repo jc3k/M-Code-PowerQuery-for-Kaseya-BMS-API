@@ -1,12 +1,12 @@
 let
-    // Define the API endpoint
-    url = "https://api.bms.kaseya.com/v2/security/authenticate",
+    // Define the base URL
+    baseUrl = "https://api.bms.kaseya.com/v2/",
 
-    // Define the request body
+    // Define the request body, insert your own credentials here
     grantType = "password",
-    userName = "uuuuuuuuuuuuu",
-    password = "ppppppppppppp",
-    tenant = "superior managed it services llc",
+    userName = "uuuuuuuuuuu",
+    password = "pppppppppp",
+    tenant = "cccccccccccc",
     body = "grantType=" & grantType & "&userName=" & userName & "&password=" & password & "&tenant=" & tenant,
 
     // Define the request headers
@@ -16,7 +16,11 @@ let
     ],
 
     // Send the request and retrieve the response
-    response = Web.Contents(url, [Headers=headers, Content=Text.ToBinary(body)]),
+    response = Web.Contents(baseUrl, [
+        Headers=headers, 
+        Content=Text.ToBinary(body), 
+        RelativePath="security/authenticate"
+    ]),
     jsonResponse = Json.Document(response),
 
     // Extract the access token from the response
