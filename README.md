@@ -1,4 +1,4 @@
-# M Code formetly known as PowerQuery
+# M Code (formerly known as PowerQuery) for Kaseya BMS API v2 in Power BI
 These functions can be used in Power BI to fetch and/or manipulate data in Kaseya BMS.
 This code is for use with Version 2 of the Kaseya BMS API
 
